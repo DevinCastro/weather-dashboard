@@ -5,7 +5,7 @@ document.getElementById('search').addEventListener('click', event => {
   let city = document.getElementById('city').value
 
   axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=79e391b4652051f3f627b227f5ffcac5
-`)
+  `)
     .then(res => {
       console.log(res.data)
 
@@ -40,28 +40,21 @@ document.getElementById('search').addEventListener('click', event => {
         forecastElem.innerHTML = `
         <div class="card">
           <div class="card-body">
-            <h1>${forecast[i].dt_txt}</h1>
-            <h2>Weather: ${forecast[i].weather[0].description}</h2>
-            <h3>Temperature: ${forecast[i].main.temp}</h3>
-            <h3>Humidity: ${forecast[i].main.humidity}</h3>
-            <h3>Wind Speed: ${forecast[i].wind.speed}</h3>
+            <p>${moment(forecast[i].dt_txt).format("MM/D/YYYY")}</p>
+            <p>Weather: ${forecast[i].weather[0].description}</p>
+            <p>Temperature: ${forecast[i].main.temp}</p>
+            <p>Humidity: ${forecast[i].main.humidity}</p>
+            <p>Wind Speed: ${forecast[i].wind.speed}</p>
           </div>
         </div>
 
         `
         document.getElementById('forecast').append(forecastElem)
+        console.log(moment(forecast[i].dt_txt).format("MM/D/YYYY"))
       }
     })
     .catch(err => { console.log(err) })
-
-
-
-
-
-
-
-
-
+    
 
 
 })
