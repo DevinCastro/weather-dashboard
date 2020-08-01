@@ -1,8 +1,25 @@
 
+
+let searchHistory = JSON.parse(localStorage.getItem('items')) || []
+
+for (i = 0; i < searchHistory.length; i++) {
+  let searchHistoryElem = document.createElement('li')
+  searchHistoryElem.className = 'card'
+
+  searchHistoryElem.innerHTML = `
+        <div class="card-body">${searchHistory[i]}</div>
+        `
+  document.getElementById('recentSearchList').append(searchHistoryElem)
+}
+
+
 document.getElementById('search').addEventListener('click', event => {
   event.preventDefault()
 
+  // =================================
+
   let city = document.getElementById('city').value
+  console.log(city)
 
   axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=79e391b4652051f3f627b227f5ffcac5
   `)
@@ -25,7 +42,7 @@ document.getElementById('search').addEventListener('click', event => {
     .catch(err => { console.log(err) })
 
 
-  // now forecast
+  // ====================================
 
   axios.get(`http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=79e391b4652051f3f627b227f5ffcac5`)
     .then(res => {
@@ -59,5 +76,26 @@ document.getElementById('search').addEventListener('click', event => {
     .catch(err => { console.log(err) })
 
 
+  // ========================================
+
+// store recent searches in the local storage
+  searchHistory.push(document.getElementById('city').value)
+  localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
+
+  let searchHistoryElem = document.createElement('li')
+  searchHistoryElem.className = 'card'
+
+  searchHistoryElem.innerHTML = `
+        <div class="card-body">${document.getElementById('city').value}</div>
+        `
+  document.getElementById('recentSearchList').append(searchHistoryElem)
+
+
+  document.getElementById('city').value = ''
+
+
 
 })
+
+
+
