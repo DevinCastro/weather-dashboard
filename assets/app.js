@@ -1,10 +1,11 @@
 
 
-let searchHistory = JSON.parse(localStorage.getItem('items')) || []
+let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || []
 
 for (i = 0; i < searchHistory.length; i++) {
   let searchHistoryElem = document.createElement('li')
   searchHistoryElem.className = 'card'
+  searchHistoryElem.dataset.city = searchHistory[i]
 
   searchHistoryElem.innerHTML = `
         <div class="card-body">${searchHistory[i]}</div>
@@ -13,12 +14,14 @@ for (i = 0; i < searchHistory.length; i++) {
 }
 
 
+
+
 document.getElementById('search').addEventListener('click', event => {
   event.preventDefault()
 
   // =================================
 
-  let city = document.getElementById('city').value
+  let city = document.getElementById('city').value 
   console.log(city)
 
   axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=79e391b4652051f3f627b227f5ffcac5
@@ -40,7 +43,6 @@ document.getElementById('search').addEventListener('click', event => {
 
     })
     .catch(err => { console.log(err) })
-
 
   // ====================================
 
@@ -84,18 +86,33 @@ document.getElementById('search').addEventListener('click', event => {
 
   let searchHistoryElem = document.createElement('li')
   searchHistoryElem.className = 'card'
-
+  searchHistoryElem.dataset.city = city
+ 
   searchHistoryElem.innerHTML = `
         <div class="card-body">${document.getElementById('city').value}</div>
         `
   document.getElementById('recentSearchList').append(searchHistoryElem)
 
-
   document.getElementById('city').value = ''
 
-
-
 })
+
+
+
+
+// ========================================
+
+// document.addEventListener('click',event => {
+// event.preventDefault()
+
+// if (event.target.dataset )
+
+// })
+
+
+
+
+
 
 
 
