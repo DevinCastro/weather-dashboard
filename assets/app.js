@@ -12,15 +12,15 @@ document.getElementById('search').addEventListener('click', event => {
       document.getElementById('weather').innerHTML = `
       <div class="card">
         <div class="card-body">
-          <h1>${res.data.name}</h1>
+          <h1>${res.data.name} <img src="http://openweathermap.org/img/w/${res.data.weather[0].icon}.png" class="img-fluid" alt="Weather icon"></h1>
           <h2>Weather: ${res.data.weather[0].description}</h2>
           <h3>Temperature: ${res.data.main.temp}</h3>
           <h3>Humidity: ${res.data.main.humidity}</h3>
           <h3>Wind Speed: ${res.data.wind.speed}</h3>
         </div>
-      </div>
-        
-        `
+      </div>  
+      `
+
     })
     .catch(err => { console.log(err) })
 
@@ -32,6 +32,8 @@ document.getElementById('search').addEventListener('click', event => {
       console.log(res)
       let forecast = res.data.list
 
+      document.getElementById('forecast').innerHTML = ``
+
       for (i = 6; i < forecast.length; i += 8) {
 
         console.log(forecast[i])
@@ -42,6 +44,7 @@ document.getElementById('search').addEventListener('click', event => {
           <div class="card-body">
             <p>${moment(forecast[i].dt_txt).format("MM/D/YYYY")}</p>
             <p>Weather: ${forecast[i].weather[0].description}</p>
+            <img src="http://openweathermap.org/img/w/${forecast[i].weather[0].icon}.png" class="img-fluid" alt="Weather icon">
             <p>Temperature: ${forecast[i].main.temp}</p>
             <p>Humidity: ${forecast[i].main.humidity}</p>
             <p>Wind Speed: ${forecast[i].wind.speed}</p>
@@ -54,7 +57,7 @@ document.getElementById('search').addEventListener('click', event => {
       }
     })
     .catch(err => { console.log(err) })
-    
+
 
 
 })
