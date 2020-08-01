@@ -4,11 +4,11 @@ let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || []
 
 for (i = 0; i < searchHistory.length; i++) {
   let searchHistoryElem = document.createElement('li')
-  searchHistoryElem.className = 'card'
+  searchHistoryElem.className = 'card recentCity'
   searchHistoryElem.dataset.city = searchHistory[i]
 
   searchHistoryElem.innerHTML = `
-        <div class="card-body">${searchHistory[i]}</div>
+        <div class="card-body recentCity">${searchHistory[i]}</div>
         `
   document.getElementById('recentSearchList').append(searchHistoryElem)
 }
@@ -85,11 +85,11 @@ document.getElementById('search').addEventListener('click', event => {
   localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
 
   let searchHistoryElem = document.createElement('li')
-  searchHistoryElem.className = 'card'
+  searchHistoryElem.className = 'card recentCity'
   searchHistoryElem.dataset.city = city
  
   searchHistoryElem.innerHTML = `
-        <div class="card-body">${document.getElementById('city').value}</div>
+        <div class="card-body recentCity">${document.getElementById('city').value}</div>
         `
   document.getElementById('recentSearchList').append(searchHistoryElem)
 
@@ -102,12 +102,16 @@ document.getElementById('search').addEventListener('click', event => {
 
 // ========================================
 
-// document.addEventListener('click',event => {
-// event.preventDefault()
+document.addEventListener('click',event => {
+event.preventDefault()
+  if (event.target.classList.contains('recentCity')) {
+  console.log('works')
 
-// if (event.target.dataset )
 
-// })
+  
+}
+
+})
 
 
 
