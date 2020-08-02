@@ -4,24 +4,20 @@ let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || []
 
 for (i = 0; i < searchHistory.length; i++) {
   let searchHistoryElem = document.createElement('li')
-  searchHistoryElem.className = 'card recentCity'
+  searchHistoryElem.className = 'card card-body recentCity'
   searchHistoryElem.dataset.city = searchHistory[i]
 
   searchHistoryElem.innerHTML = `
-        <div class="card-body recentCity">${searchHistory[i]}</div>
+        ${searchHistory[i]}
         `
   document.getElementById('recentSearchList').append(searchHistoryElem)
 }
 
 
 
+const getWeather = (CITY) => {
 
-document.getElementById('search').addEventListener('click', event => {
-  event.preventDefault()
-
-  // =================================
-
-  let city = document.getElementById('city').value 
+  let city = CITY
   console.log(city)
 
   axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=79e391b4652051f3f627b227f5ffcac5
@@ -29,18 +25,31 @@ document.getElementById('search').addEventListener('click', event => {
     .then(res => {
       console.log(res.data)
 
-      document.getElementById('weather').innerHTML = `
-      <div class="card">
-        <div class="card-body">
+
+      // i NEEDED the lat and long from the first request
+      axios.get(`http://api.openweathermap.org/data/2.5/uvi?appid=79e391b4652051f3f627b227f5ffcac5&lat=${res.data.coord.lat}&lon=${res.data.coord.lon}`)
+        .then(result => {
+          console.log(result.data.value)
+          let uvIndex = result.data.value
+
+
+          document.getElementById('weather').innerHTML = `
+          <div class="card">
+          <div class="card-body">
           <h1>${res.data.name} <img src="http://openweathermap.org/img/w/${res.data.weather[0].icon}.png" class="img-fluid" alt="Weather icon"></h1>
           <h2>Weather: ${res.data.weather[0].description}</h2>
           <h3>Temperature: ${res.data.main.temp}</h3>
           <h3>Humidity: ${res.data.main.humidity}</h3>
           <h3>Wind Speed: ${res.data.wind.speed}</h3>
-        </div>
-      </div>  
-      `
+          <h3>UV Index: ${uvIndex}</h3>
+          </div>
+          </div>  
+          `
 
+        })
+
+
+        .catch(err => { console.log(err) })
     })
     .catch(err => { console.log(err) })
 
@@ -77,39 +86,54 @@ document.getElementById('search').addEventListener('click', event => {
     })
     .catch(err => { console.log(err) })
 
+}
 
-  // ========================================
 
-// store recent searches in the local storage
+
+const storeCity = () => {
+
+  // store recent searches in the local storage
   searchHistory.push(document.getElementById('city').value)
   localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
 
   let searchHistoryElem = document.createElement('li')
-  searchHistoryElem.className = 'card recentCity'
-  searchHistoryElem.dataset.city = city
- 
+  searchHistoryElem.className = 'card card-body recentCity'
+  searchHistoryElem.dataset.city = document.getElementById('city').value
+
   searchHistoryElem.innerHTML = `
-        <div class="card-body recentCity">${document.getElementById('city').value}</div>
-        `
+    ${document.getElementById('city').value}
+    `
   document.getElementById('recentSearchList').append(searchHistoryElem)
 
   document.getElementById('city').value = ''
 
+}
+
+
+// =======================================
+
+
+document.getElementById('search').addEventListener('click', event => {
+  event.preventDefault()
+
+  // =================================
+  getWeather(document.getElementById('city').value)
+  
+  storeCity()
+  
 })
-
-
 
 
 // ========================================
 
-document.addEventListener('click',event => {
-event.preventDefault()
+document.addEventListener('click', event => {
+  event.preventDefault()
   if (event.target.classList.contains('recentCity')) {
-  console.log('works')
+    console.log(event.target.dataset.city)
 
+    getWeather(event.target.dataset.city)
 
-  
-}
+  }
 
 })
 
