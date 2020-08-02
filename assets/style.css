@@ -1,0 +1,14 @@
+.fiveDay {
+  background-color: rgb(72, 109, 255);
+  color: white;
+  width: fit-content;
+}
+
+.jumbotron {
+  text-align: center;
+}
+
+#weather {
+  min-width: 100%;
+  text-align: left;
+}

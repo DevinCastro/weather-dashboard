@@ -36,12 +36,13 @@ const getWeather = (CITY) => {
           document.getElementById('weather').innerHTML = `
           <div class="card">
           <div class="card-body">
-          <h1>${res.data.name} <img src="http://openweathermap.org/img/w/${res.data.weather[0].icon}.png" class="img-fluid" alt="Weather icon"></h1>
-          <h2>Weather: ${res.data.weather[0].description}</h2>
-          <h3>Temperature: ${res.data.main.temp}</h3>
-          <h3>Humidity: ${res.data.main.humidity}</h3>
-          <h3>Wind Speed: ${res.data.wind.speed}</h3>
-          <h3>UV Index: ${uvIndex}</h3>
+          <h2>${moment(res.data.dt_txt).format("MM/D/YYYY")}</h2>
+          <h2>${res.data.name}: <img src="http://openweathermap.org/img/w/${res.data.weather[0].icon}.png" class="img-fluid" alt="Weather icon"></h2>
+          <h3>Weather: ${res.data.weather[0].description}</h3>
+          <h4>Temperature: ${res.data.main.temp}</h4>
+          <h4>Humidity: ${res.data.main.humidity}</h4>
+          <h4>Wind Speed: ${res.data.wind.speed}</h4>
+          <h4>UV Index: <button class="btn btn-danger">${uvIndex}</btn></h4>
           </div>
           </div>  
           `
@@ -69,7 +70,7 @@ const getWeather = (CITY) => {
         forecastElem.className = 'col-2'
         forecastElem.innerHTML = `
         <div class="card">
-          <div class="card-body">
+          <div class="card-body fiveDay">
             <p>${moment(forecast[i].dt_txt).format("MM/D/YYYY")}</p>
             <p>Weather: ${forecast[i].weather[0].description}</p>
             <img src="http://openweathermap.org/img/w/${forecast[i].weather[0].icon}.png" class="img-fluid" alt="Weather icon">
