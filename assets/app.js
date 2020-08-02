@@ -30,7 +30,19 @@ const getWeather = (CITY) => {
       axios.get(`http://api.openweathermap.org/data/2.5/uvi?appid=79e391b4652051f3f627b227f5ffcac5&lat=${res.data.coord.lat}&lon=${res.data.coord.lon}`)
         .then(result => {
           console.log(result.data.value)
+          console.log(result.data)
           let uvIndex = result.data.value
+          let uvButtonClass = ''
+
+          if (uvIndex < 3) {
+            uvButtonClass = 'btn-success'
+          }
+          else if (uvIndex >= 3 && uvIndex <= 7) {
+            uvButtonClass = 'btn-warning'
+          }
+          else {
+            uvButtonClass = 'btn-danger'
+          }
 
 
           document.getElementById('weather').innerHTML = `
@@ -39,10 +51,10 @@ const getWeather = (CITY) => {
           <h2>${moment(res.data.dt_txt).format("MM/D/YYYY")}</h2>
           <h2>${res.data.name}: <img src="http://openweathermap.org/img/w/${res.data.weather[0].icon}.png" class="img-fluid" alt="Weather icon"></h2>
           <h3>Weather: ${res.data.weather[0].description}</h3>
-          <h4>Temperature: ${res.data.main.temp}</h4>
-          <h4>Humidity: ${res.data.main.humidity}</h4>
-          <h4>Wind Speed: ${res.data.wind.speed}</h4>
-          <h4>UV Index: <button class="btn btn-danger">${uvIndex}</btn></h4>
+          <h4>Temperature: ${res.data.main.temp}&deg</h4>
+          <h4>Humidity: ${res.data.main.humidity}%</h4>
+          <h4>Wind Speed: ${res.data.wind.speed} MPH</h4>
+          <h4>UV Index: <button class="btn ${uvButtonClass}">${uvIndex}</btn></h4>
           </div>
           </div>  
           `
@@ -63,20 +75,18 @@ const getWeather = (CITY) => {
 
       document.getElementById('forecast').innerHTML = ``
 
-      for (i = 6; i < forecast.length; i += 8) {
+      for (i = 5; i < forecast.length; i += 8) {
 
         console.log(forecast[i])
         let forecastElem = document.createElement('div')
-        forecastElem.className = 'col-2'
+        forecastElem.className = 'col-sm'
         forecastElem.innerHTML = `
         <div class="card">
           <div class="card-body fiveDay">
             <p>${moment(forecast[i].dt_txt).format("MM/D/YYYY")}</p>
-            <p>Weather: ${forecast[i].weather[0].description}</p>
             <img src="http://openweathermap.org/img/w/${forecast[i].weather[0].icon}.png" class="img-fluid" alt="Weather icon">
-            <p>Temperature: ${forecast[i].main.temp}</p>
-            <p>Humidity: ${forecast[i].main.humidity}</p>
-            <p>Wind Speed: ${forecast[i].wind.speed}</p>
+            <p>Temp: ${forecast[i].main.temp}&deg</p>
+            <p>Humidity: ${forecast[i].main.humidity}%</p>
           </div>
         </div>
 

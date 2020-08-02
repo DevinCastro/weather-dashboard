@@ -18,45 +18,43 @@
 
 <body>
 
+  <!-- First wrap everything into a container -->
   <div class="container">
 
-    <div class="jumbotron">
-      
-        <h1 class="display-4">Weather Dashboard</h1>
-      
+
+    <!-- I started the landing page with a bootstrap jumbotron than has the title in it called "Weather Dashboard" -->
+    <div class="jumbotron">    
+        <h1 class="display-4">Weather Dashboard</h1>     
     </div>
 
 
+    <!-- Next I created a row to have some columns inside it -->
     <div class="container-fluid">
-
       <div class="row">
-        <div class="col-3">
 
+        <!-- This first column is the column on the left that will have the search bar, search button, and the recent search list -->
+        <div class="col-3">
           <form class="my-2 my-lg-0">
             <input id="city" class="form-control mr-sm-2" type="search" placeholder="Search City" aria-label="Search">
             <button id="search" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-
+          </form>        
           <div id="recentSearch">
             <ul id="recentSearchList"></ul>
           </div>
         </div>
 
 
+        <!-- The column on the right will be divided into a top and bottom row.  The top row will show the current weather -->
         <div class="col-9">
           <div class="row">
 
             <div id="weather"></div>
-
           </div>
-
+          <!-- The bottom row will show the 5 day forecast fot the city you searched -->
           <div id="forecast" class="row">
-
           </div>
         </div>
-
       </div>
-
     </div>
 
 
