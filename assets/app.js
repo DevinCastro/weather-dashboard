@@ -33,7 +33,7 @@ const getWeather = (city) => {
       console.log(res.data)
 
       // We now nest ANOTHER API request to get the UV index, because I needed to get the previous data from the first request to also aquire the longitude and lattitude to request the UV information
-      axios.get(`http://api.openweathermap.org/data/2.5/uvi?appid=79e391b4652051f3f627b227f5ffcac5&lat=${res.data.coord.lat}&lon=${res.data.coord.lon}`)
+      axios.get(`https://api.openweathermap.org/data/2.5/uvi?appid=79e391b4652051f3f627b227f5ffcac5&lat=${res.data.coord.lat}&lon=${res.data.coord.lon}`)
         .then(result => {
           console.log(result.data.value)
           console.log(result.data)
@@ -76,7 +76,7 @@ const getWeather = (city) => {
 
   // ====================================
   // This is the API request to get the information for the 5 day forecast
-  axios.get(`http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=79e391b4652051f3f627b227f5ffcac5`)
+  axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=79e391b4652051f3f627b227f5ffcac5`)
     .then(res => {
       console.log(res)
       // create this variable to help our notation not get too complex
